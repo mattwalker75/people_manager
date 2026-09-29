@@ -147,7 +147,12 @@ export class Service {
   }
 
   // ---------------------------------------------------------------- directories
-  async listDirectories(tabId: Id) { await this.tabOrThrow(tabId); return this.store.listDirectories(tabId); }
+  /** A tab's directories, each with how many people sit directly in it; plus the top level's count. */
+  async listDirectories(tabId: Id) {
+    await this.tabOrThrow(tabId);
+    const [dirs, counts] = await Promise.all([this.store.listDirectories(tabId), this.store.peopleCounts(tabId)]);
+    return { directories: dirs.map((d) => ({ ...d, peopleCount: counts[d.id] || 0 })), topLevelPeople: counts[""] || 0 };
+  }
 
   async createDirectory(input: { tabId: Id; parentId?: Id | null; name: string; description?: string }): Promise<Directory> {
     await this.tabOrThrow(input.tabId);

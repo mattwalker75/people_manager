@@ -94,6 +94,9 @@ describe.each(makers)("%s store", (_name, make) => {
     expect(await ids("tomas alv")).toEqual(["tomas"]);
     expect(await ids("50%_")).toEqual([]);
     expect((await s.searchPeople("golf", 5))[0].tags).toEqual(["golf"]);
+    const m1 = (await s.getPerson("mark1"))!; await s.savePerson({ ...m1, businessCategory: "Finance" });
+    const t1 = (await s.getPerson("tomas"))!; await s.savePerson({ ...t1, businessCategory: "Accounting" });
+    expect(await s.distinctCategories()).toEqual(["Accounting", "Finance"]);
   });
 
   it("custom fields: usage, clearing, deleting", async () => {

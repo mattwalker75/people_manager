@@ -96,7 +96,9 @@ describe.each(sources)("rules on %s", (_n, ds) => {
     const moved = await svc.getPerson(p.id);
     expect(moved.tabId).toBe(t2);
     expect(moved.path).toBe("Networking › Events › Summit 2026");
-    const t2Top = (await svc.listDirectories(t2)).filter((d) => !d.parentId);
+    const listing = await svc.listDirectories(t2);
+    const t2Top = listing.directories.filter((d) => !d.parentId);
+    expect(listing.directories.find((d) => d.id === sub.id)!.peopleCount).toBe(1);
     expect(t2Top[0].id).toBe(top.id);
   });
 

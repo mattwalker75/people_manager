@@ -131,6 +131,7 @@ export async function createApp(config = new Config(), opts: { rateLimit?: boole
   });
 
   app.get("/api/search", h((req) => service.search(String(req.query.q || ""))));
+  app.get("/api/categories", h(() => service.store.distinctCategories()));
 
   // ---------------------------------------------------------------- custom fields
   app.get("/api/fields", h(() => service.listFields()));

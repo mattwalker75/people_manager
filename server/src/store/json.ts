@@ -95,6 +95,11 @@ export class JsonStore implements Store {
     return this.doc.people.filter(this.match(where)).sort(byPos).map(summaryOf);
   }
   async countPeople(where: PeopleWhere) { return this.doc.people.filter(this.match(where)).length; }
+  async peopleCounts(tabId: Id) {
+    const out: Record<string, number> = {};
+    for (const p of this.doc.people) if (p.tabId === tabId) out[p.directoryId ?? ""] = (out[p.directoryId ?? ""] || 0) + 1;
+    return out;
+  }
   async getPerson(id: Id) { const p = this.doc.people.find((x) => x.id === id); return p ? clone(p) : null; }
   async insertPerson(p: Person) { this.doc.people.push(clone(p)); this.persist(); }
   async savePerson(p: Person) {
@@ -114,6 +119,10 @@ export class JsonStore implements Store {
       if (out.length >= limit) break;
     }
     return out;
+  }
+
+  async distinctCategories() {
+    return [...new Set(this.doc.people.map((p) => p.businessCategory.trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b));
   }
 
   // ---------------------------------------------------------------- custom fields

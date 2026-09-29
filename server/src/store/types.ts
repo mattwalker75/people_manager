@@ -48,6 +48,8 @@ export interface Store {
   /** Summaries ordered by position. */
   listPeople(where: PeopleWhere): Promise<PersonSummary[]>;
   countPeople(where: PeopleWhere): Promise<number>;
+  /** People directly in each directory of a tab; key "" = the top level. */
+  peopleCounts(tabId: Id): Promise<Record<string, number>>;
   getPerson(id: Id): Promise<Person | null>;
   insertPerson(p: Person): Promise<void>;
   /** Replace the whole record: fields, facts, contacts, links, notes, photos, tags, custom values. */
@@ -56,6 +58,8 @@ export interface Store {
   placePeople(p: PersonPlacement[]): Promise<void>;
   /** People whose name, nickname or a tag contains `folded` (already lower-case, accents removed). */
   searchPeople(folded: string, limit: number): Promise<SearchHit[]>;
+  /** Every business category already used, for suggestions while typing. */
+  distinctCategories(): Promise<string[]>;
 
   listFields(): Promise<CustomField[]>;
   insertField(f: CustomField): Promise<void>;

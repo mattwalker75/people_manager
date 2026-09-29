@@ -6,7 +6,9 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { knex, type Knex } from "knex";
+import knexModule, { type Knex } from "knex";
+// knex is CommonJS: under plain Node ESM only its default export is visible
+const knex = ((knexModule as unknown as { knex?: typeof knexModule }).knex ?? knexModule) as typeof knexModule;
 import type {
   ContactItem, CustomField, DataSourceStatus, Directory, Id, LinkItem, Note, PeopleDocument, Person, PersonFields, PersonSummary, Photo, Tab,
 } from "../../../shared/types.js";
@@ -206,6 +208,10 @@ export class SqlStore implements Store {
   async listPeople(w: PeopleWhere): Promise<PersonSummary[]> {
     return (await this.where(this.summaries(), w).orderBy([{ column: "p.position" }, { column: "p.first_name" }])).map(summaryFromRow);
   }
+  async peopleCounts(tabId: Id) {
+    const rows = await this.q("people").where({ tab_id: tabId }).select("directory_id").count({ n: "*" }).groupBy("directory_id");
+    return Object.fromEntries(rows.map((r: Record<string, unknown>) => [s(r.directory_id), Number(r.n)]));
+  }
   async countPeople(w: PeopleWhere) { const r = await this.where(this.q({ p: "people" }).count({ n: "*" }), w).first(); return Number(r?.n ?? 0); }
 
   async getPerson(id: Id): Promise<Person | null> {
@@ -259,6 +265,11 @@ export class SqlStore implements Store {
     const ids = rows.map((r: Record<string, unknown>) => s(r.id));
     const tagRows = ids.length ? await this.q("person_tags").whereIn("person_id", ids) : [];
     return rows.map((r: Record<string, unknown>) => ({ ...summaryFromRow(r), tags: tagRows.filter((t: Record<string, unknown>) => t.person_id === r.id).map((t: Record<string, unknown>) => s(t.tag)) }));
+  }
+
+  async distinctCategories() {
+    const rows = await this.q("people").distinct("business_category").whereNot({ business_category: "" }).orderBy("business_category");
+    return rows.map((r: Record<string, unknown>) => s(r.business_category));
   }
 
   // ---------------------------------------------------------------- custom fields

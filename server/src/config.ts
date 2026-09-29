@@ -48,7 +48,7 @@ export const DEFAULTS: AppConfig = {
 };
 
 /** Settings that only take effect after ./PEOPLE.sh --restart. */
-export const RESTART_REQUIRED = ["server.port", "server.allowNetwork"];
+export const RESTART_REQUIRED = ["server.port", "server.allowNetwork", "security.sessionHours"];
 
 export const MASK = "••••••••";
 

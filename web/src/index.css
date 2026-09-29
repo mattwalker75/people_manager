@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/*
+ * Theme tokens. Components use only these (through the Tailwind names below),
+ * so Light, Dark and your own themes all restyle the whole app. A custom theme
+ * sets the same variables inline on <html> (see lib/theme.ts).
+ */
+:root {
+  --bg: #eef1f0;
+  --surface: #ffffff;
+  --surface-2: #f4f7f6;
+  --ink: #1b2422;
+  --ink-2: #3d4a47;
+  --mute: #5f6b68;
+  --faint: #7b8784;
+  --line: #e3e9e7;
+  --line-2: #d0d9d6;
+  --accent: #0f766e;
+  --accent-ink: #ffffff;
+  --accent-soft: #d5ece8;
+  --accent-softer: #ecf7f5;
+  --accent-text: #0b4f49;
+  --danger: #b42318;
+  --danger-soft: #fdecea;
+  --warn: #8a5a00;
+  --warn-soft: #fff6df;
+  --shadow: 16 40 36;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #0e1312;
+  --surface: #151c1b;
+  --surface-2: #1b2423;
+  --ink: #e4edeb;
+  --ink-2: #c2cfcc;
+  --mute: #93a3a0;
+  --faint: #778784;
+  --line: #243130;
+  --line-2: #33423f;
+  --accent: #2ab3a2;
+  --accent-ink: #03201c;
+  --accent-soft: #17423c;
+  --accent-softer: #10302b;
+  --accent-text: #86e3d6;
+  --danger: #f0776b;
+  --danger-soft: #3a1c1a;
+  --warn: #f0c46a;
+  --warn-soft: #33290f;
+  --shadow: 0 0 0;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-mute: var(--mute);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-softer: var(--accent-softer);
+  --color-accent-text: var(--accent-text);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --font-sans: "Public Sans Variable", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Newsreader Variable", Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* Base rules live in the base layer so Tailwind utilities (text-accent-ink on a button…) always win. */
+@layer base {
+  html, body, #root { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent-soft); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  input:focus-visible, textarea:focus-visible, select:focus-visible { outline-offset: 0; }
+  /* scrollbars that belong to the theme */
+  * { scrollbar-width: thin; scrollbar-color: var(--line-2) transparent; }
+}
+
+.shadow-lift { box-shadow: 0 22px 44px rgb(var(--shadow) / 0.22); }
+.shadow-dialog { box-shadow: 0 40px 90px rgb(var(--shadow) / 0.35); }
+.shadow-soft { box-shadow: 0 1px 2px rgb(var(--shadow) / 0.06); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
