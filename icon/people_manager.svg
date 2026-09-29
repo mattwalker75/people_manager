@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#149184"/><stop offset="1" stop-color="#0b5a53"/></linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#eef4f2"/></linearGradient>
+    <linearGradient id="card2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d5ece8"/><stop offset="1" stop-color="#b9ddd6"/></linearGradient>
+    <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".22"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="22" stdDeviation="24" flood-color="#05302b" flood-opacity=".45"/></filter>
+    <filter id="sh2" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#05302b" flood-opacity=".35"/></filter>
+    <clipPath id="av"><rect x="296" y="408" width="176" height="176" rx="40"/></clipPath>
+  </defs>
+  <rect x="100" y="100" width="824" height="824" rx="190" fill="url(#bg)" filter="url(#sh)"/>
+  <rect x="100" y="100" width="824" height="824" rx="190" fill="url(#gloss)"/>
+  <!-- card behind -->
+  <g transform="rotate(-9 512 540)" filter="url(#sh2)"><rect x="228" y="318" width="568" height="392" rx="46" fill="url(#card2)"/></g>
+  <!-- front card -->
+  <g filter="url(#sh2)"><rect x="248" y="360" width="568" height="392" rx="46" fill="url(#card)"/></g>
+  <g clip-path="url(#av)"><rect x="296" y="408" width="176" height="176" fill="#d5ece8"/><circle cx="384" cy="478" r="42" fill="#0f766e"/><path d="M308 600c8-54 38-82 76-82s68 28 76 82z" fill="#0f766e"/></g>
+  <rect x="504" y="428" width="240" height="30" rx="15" fill="#1b2422"/>
+  <rect x="504" y="484" width="190" height="22" rx="11" fill="#9aa7a4"/>
+  <rect x="504" y="526" width="220" height="22" rx="11" fill="#c8d2cf"/>
+  <rect x="296" y="628" width="448" height="20" rx="10" fill="#d9e3e0"/>
+  <rect x="296" y="668" width="330" height="20" rx="10" fill="#d9e3e0"/>
+  <!-- search badge -->
+  <g filter="url(#sh2)"><circle cx="760" cy="720" r="92" fill="#ffffff"/></g>
+  <circle cx="748" cy="708" r="40" fill="none" stroke="#0f766e" stroke-width="20"/>
+  <path d="M778 738l34 34" stroke="#0f766e" stroke-width="22" stroke-linecap="round"/>
+</svg>

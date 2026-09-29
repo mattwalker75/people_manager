@@ -5,6 +5,14 @@ All notable changes to People Manager (Keep a Changelog style; dates are when th
 ## [Unreleased]
 
 ### Added
+- 2026-09-29: **Scripts and icon.** `INSTALL_APP.sh` (installs Node.js and jq with Homebrew if
+  missing, MariaDB with `--mysql`, then packages, build, `config.json`, tests; `--check`, `--yes`),
+  `PEOPLE.sh` (`-s/--start -x/--stop -r/--restart -i/--status -l/--logs -f/--fg -c/--check
+  -t/--test -d/--dev -h/--help`, bare words too, rebuilds when the code changed),
+  `SETUP_SQLITE_DB.sh` and `SETUP_MYSQL_DB.sh` (read `config.json`, offer to install missing
+  tools and start a stopped local MariaDB, REBUILD confirmation, random app password if none,
+  admin via your own socket account / sudo / `MYSQL_ADMIN_PASSWORD`), `Start_People_Manager.sh`
+  (desktop-app launcher for my_mac_app), and the app icon (`icon/`: .icns, .png, .svg source).
 - 2026-09-29: **Web UI — the "C · Atelier" design Matt chose.** Tabs across the top (rename,
   reorder, delete-when-empty), the tab's directories as a tree in the sidebar (directories only,
   counts include everything inside), the selected directory's sub-directories as tiles and its
