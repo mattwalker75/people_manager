@@ -123,7 +123,8 @@ Up to **5** per person (changeable in Settings → General).
   are saved square; the file keeps its original name with spaces turned into underscores.
 - The **main photo** (ringed) is the one on their card and in search results. The first photo
   you add becomes the main one.
-- **Click a photo** → *Make main photo*, *Open full size*, or *Delete photo…*.
+- **Click the big photo** to view it in a floating window; ‹ › (or the arrow keys) step through the others.
+- **Click a small photo** → *View photo*, *Make main photo*, or *Delete photo…*.
 
 Photos are files in `data/images/<person id>/`. They are not part of exports or backups — see
 [DATA.md](DATA.md#photos).

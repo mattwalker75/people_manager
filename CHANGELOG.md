@@ -5,6 +5,9 @@ All notable changes to People Manager (Keep a Changelog style; dates are when th
 ## [Unreleased]
 
 ### Changed
+- 2026-09-29: **Viewing a photo** opens it in a floating window on top of the card (with ‹ › and
+  the arrow keys to step through that person's photos) instead of a new browser tab. The menu item
+  is now **View photo** (first in the list), and clicking the big photo views it too.
 - 2026-09-29: The **⋯ menu for a tab** now sits inside the selected tab, next to its name.
 - 2026-09-29: The **main area shows people only** — directories live only in the sidebar. To move
   someone, press and hold their card and drop it on a directory in the sidebar (or a tab). The
