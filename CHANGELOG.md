@@ -5,6 +5,10 @@ All notable changes to People Manager (Keep a Changelog style; dates are when th
 ## [Unreleased]
 
 ### Added
+- 2026-09-29: **Documentation.** High-level `README.md` linking into `Docs/`: USER_GUIDE,
+  INSTALLATION, SCRIPTS, CONFIGURATION, DATA (sources, import/export, validation, backups,
+  photos, file format), SECURITY, ARCHITECTURE, API, DEVELOPMENT (incl. running the tests on a
+  private MariaDB); `CLAUDE.md` with the design and spec decisions and the rules behind them.
 - 2026-09-29: **Scripts and icon.** `INSTALL_APP.sh` (installs Node.js and jq with Homebrew if
   missing, MariaDB with `--mysql`, then packages, build, `config.json`, tests; `--check`, `--yes`),
   `PEOPLE.sh` (`-s/--start -x/--stop -r/--restart -i/--status -l/--logs -f/--fg -c/--check
