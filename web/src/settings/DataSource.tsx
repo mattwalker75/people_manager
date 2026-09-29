@@ -8,6 +8,7 @@ import { ApplyBadge, Button, cx, Field, TextInput } from "../components/ui";
 import { api, errorText } from "../lib/api";
 import type { AppConfig, AppState } from "../lib/hooks";
 import { Card } from "./SettingsPage";
+import { CsvExportCard, CsvImportCard } from "./Csv";
 import { useSaveSettings } from "./General";
 
 type DS = AppConfig["dataSource"];
@@ -152,6 +153,10 @@ export function ImportExportSection({ state }: { state: AppState }) {
   return (
     <>
       <h1 className="font-display text-[28px] font-semibold">Import &amp; export</h1>
+      <h2 className="-mb-2 mt-1 text-[12.5px] font-semibold uppercase tracking-[0.08em] text-faint">Spreadsheets — people in and out of Excel</h2>
+      <CsvImportCard />
+      <CsvExportCard />
+      <h2 className="-mb-2 mt-4 text-[12.5px] font-semibold uppercase tracking-[0.08em] text-faint">Everything — tabs, directories, people and fields (JSON)</h2>
       <div className="flex items-start gap-2.5 rounded-2xl bg-warn-soft px-4 py-3 text-[13.5px] text-warn">
         <AlertTriangle size={17} className="mt-0.5 shrink-0" />
         <span><b>Photos are not included</b> in imports or exports — they can be gigabytes. They live in <span className="font-mono">{state.photosDir}</span>; copy that folder yourself when you move to another computer.</span>

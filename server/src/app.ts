@@ -15,6 +15,7 @@ import type { DataSourceType } from "../../shared/types.js";
 import { Auth, type SessionData } from "./auth.js";
 import { Backups } from "./backups.js";
 import { Config, ROOT, deepMerge } from "./config.js";
+import { CsvPeople } from "./csv.js";
 import { hostGuard, networkUrls, sameOriginWrites } from "./security.js";
 import { Service } from "./service.js";
 import { createStore } from "./store/index.js";
@@ -30,13 +31,14 @@ const h = (fn: Handler) => async (req: Request, res: Response, next: NextFunctio
 };
 const param = (req: Request, k: string) => String(req.params[k]);
 
-export interface AppHandle { app: express.Express; service: Service; auth: Auth; backups: Backups; config: Config }
+export interface AppHandle { app: express.Express; service: Service; auth: Auth; backups: Backups; csv: CsvPeople; config: Config }
 
 export async function createApp(config = new Config(), opts: { rateLimit?: boolean } = {}): Promise<AppHandle> {
   const service = new Service(config);
   await service.useConfiguredSource();
   const auth = new Auth(config);
   const backups = new Backups(service);
+  const csv = new CsvPeople(service, backups);
   const app = express();
   app.disable("x-powered-by");
   app.set("etag", false);
@@ -49,6 +51,7 @@ export async function createApp(config = new Config(), opts: { rateLimit?: boole
     } },
     strictTransportSecurity: false, // plain http on a home network must keep working
   }));
+  app.use("/api/csv", express.json({ limit: "30mb" })); // a spreadsheet of thousands of people
   app.use(express.json({ limit: "5mb" }));
   app.use(cookieSession({ name: "pm_session", keys: [crypto.randomBytes(32).toString("hex")], httpOnly: true, sameSite: "strict",
     maxAge: Math.max(1, config.get().security.sessionHours) * 3600_000 }));
@@ -203,6 +206,25 @@ export async function createApp(config = new Config(), opts: { rateLimit?: boole
     return backups.restore(req.body);
   }));
 
+  // ---------------------------------------------------------------- people as CSV (spreadsheets)
+  const csvDownload = (res: Response, name: string, body: string) => {
+    res.set("content-type", "text/csv; charset=utf-8");
+    res.set("content-disposition", `attachment; filename="${name}"`);
+    res.send(body);
+  };
+  app.get("/api/csv/template", h(async (_req, res) => csvDownload(res, "people-template.csv", await csv.template())));
+  app.get("/api/csv/export", h(async (req, res) => {
+    const tabId = String(req.query.tabId || "") || null;
+    const tab = tabId ? (await service.listTabs()).find((t) => t.id === tabId)?.name : null;
+    const r = await csv.exportCsv(tabId);
+    csvDownload(res, `people-${tab ? tab.toLowerCase().replace(/[^a-z0-9]+/g, "-") + "-" : ""}${stamp()}.csv`, r.csv);
+  }));
+  app.post("/api/csv/preview", h((req) => csv.preview(String(req.body?.csv ?? ""), String(req.body?.tabId || ""), req.body?.mapping)));
+  app.post("/api/csv/import", h((req) => csv.import({ csv: String(req.body?.csv ?? ""), tabId: String(req.body?.tabId || ""), mapping: req.body?.mapping,
+    newDirectory: req.body?.newDirectory || null, skipDuplicates: !!req.body?.skipDuplicates, fileName: String(req.body?.fileName || "").slice(0, 200) })));
+  app.get("/api/csv/imports", h(() => csv.recent()));
+  app.post("/api/csv/imports/:id/undo", h((req) => csv.undo(param(req, "id"))));
+
   app.use("/api", (_req, res) => { res.status(404).json({ error: "No such action." }); });
 
   // ---------------------------------------------------------------- the web UI
@@ -224,7 +246,7 @@ export async function createApp(config = new Config(), opts: { rateLimit?: boole
     res.status(500).json({ error: `Something went wrong: ${err.message || e}` });
   });
 
-  return { app, service, auth, backups, config };
+  return { app, service, auth, backups, csv, config };
 }
 
 /** Only the settings a person may change, with types coerced. */

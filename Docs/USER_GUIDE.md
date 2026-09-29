@@ -16,6 +16,7 @@ organise bookmarks. This guide walks through everything the app does.
 - [Moving things around](#moving-things-around)
 - [Deleting](#deleting)
 - [Your own fields](#your-own-fields)
+- [Spreadsheets (CSV)](#spreadsheets-csv)
 - [Settings at a glance](#settings-at-a-glance)
 - [Keyboard](#keyboard)
 
@@ -204,6 +205,36 @@ choose:
 2. **Delete from all N…** — the field and every value, after typing DELETE.
 3. **Archive instead** — hidden everywhere, values kept; bring it back any time.
 
+## Spreadsheets (CSV)
+
+**Settings → Import & export** has two spreadsheet cards (details and every column in
+[DATA.md](DATA.md#spreadsheets-csv)).
+
+**Import people from a CSV**
+
+1. **Download CSV template** (optional) — a file with one column per field, one per field of
+   your own, and an example row (it is skipped automatically). Fill it in with Excel, Numbers or
+   Google Sheets and save as CSV. Exports from **LinkedIn** (*Connections.csv*), **Google
+   Contacts** and **Outlook** work as they are.
+2. **Choose a CSV file…** — the app shows how each column was matched (*First Name → First
+   name*, *URL → LinkedIn*…). Change any that are wrong; set a column to *don't import* to leave
+   it out. **Only First Name is required** — every other column is optional.
+3. Pick the **tab**. People land at its top level; tick **Put them in a new directory** to keep
+   them together (e.g. *Imported Sep 29, 2026*).
+4. Check the preview: how many are ready, rows skipped (no first name, the example row), names
+   that already exist (allowed — tick *Skip …* to leave those out), dates that couldn't be read,
+   and the first ten people as they will look.
+5. **Import N people.** A backup is made first. **Undo this import** removes exactly the people
+   it added (and its new directory if it's empty); *Recent imports* keeps the last 20 for undoing
+   later.
+
+Anything a CSV can't carry — **photos**, more notes, extra phone numbers or links, and putting
+people into directories — is added to each person afterwards, on their card or by dragging them
+onto a directory in the sidebar.
+
+**Export people to a CSV** — everyone, or one tab. Same columns as the template plus **Tab** and
+**Directory**, so you can open it in Excel, edit it, and import it again. Photos aren't included.
+
 ## Settings at a glance
 
 Open with the ⚙ button. Every setting is saved to `config.json` and marked **Applies
@@ -214,7 +245,7 @@ immediately** or **Needs restart** (a banner reminds you: `./PEOPLE.sh --restart
 | General | Port and *Allow other devices on my network* (both need a restart); photos per person; photos folder |
 | Security | Turn the login on/off; password file; how long you stay signed in |
 | Data source | JSON / SQLite / MySQL; test; build or rebuild the database |
-| Import & export | Validate a JSON file, import it (replace or add alongside), export to JSON or download |
+| Import & export | People from and to spreadsheets (CSV template, import with undo, export); the whole data set as JSON (validate, replace or add alongside, export) |
 | People fields | Your own fields |
 | Appearance | Light, Dark, System, and themes you make yourself |
 | Backups | Back up now, restore, download, delete |

@@ -4,7 +4,8 @@
 - [Choosing a data source](#choosing-a-data-source)
 - [Switching](#switching)
 - [Building a database](#building-a-database)
-- [Import and export](#import-and-export)
+- [Spreadsheets (CSV)](#spreadsheets-csv)
+- [Import and export (JSON)](#import-and-export-json)
 - [The validation report](#the-validation-report)
 - [Backups](#backups)
 - [Photos](#photos)
@@ -62,9 +63,81 @@ needs building.
 **Rebuild database…** on a database that already has tables **erases everything in it** and
 asks you to type REBUILD.
 
-## Import and export
+## Spreadsheets (CSV)
 
-**Settings → Import & export.**
+People — not tabs, directories or settings — can come in from and go out to spreadsheets.
+**Settings → Import & export**, the two *spreadsheet* cards. (To move *everything*, use the JSON
+import and export below.)
+
+### The template
+
+*Download CSV template* gives `people-template.csv`, one column per field — fill in what you
+know; **only First Name is required**:
+
+| Columns | Notes |
+| --- | --- |
+| First Name, Last Name, Nickname, One-line Description, Title, Profession, Business Category | |
+| Mobile Phone, Work Phone, Home Phone | labelled Mobile / Work / Home on the card |
+| Personal Email, Work Email | |
+| Home Address, Work Address | an address may run over several lines in one cell |
+| LinkedIn, Facebook, Instagram, X, TikTok, YouTube, Website | each becomes a named link |
+| Business Website, Business Description | |
+| Birthday, Date Met | `2026-03-12`, `3/12/2026`, `12 Mar 2026`, `March 12, 2026`; a birthday may leave out the year (`06-04`, `June 4`) |
+| From, How We Met, Description | |
+| Age Range, Relationship, Kids, Pets, Family Notes | |
+| Key Facts, Tags | several in one cell, separated by `;` |
+| Notes | becomes the first note; several notes separated by a line of `---` |
+| *one column per field you added* | yes/no fields accept Yes/No, True/False, Y/N, 1/0 |
+
+The template has one example row (Susan Park) whose Notes say *“Example row — delete it before
+importing”*; the import skips that row automatically. Files are saved with a UTF-8 marker so
+Excel shows accents correctly.
+
+### Importing
+
+1. Choose the file. The app finds the heading row (even below the notes LinkedIn puts at the top)
+   and matches each column. It recognises the template's headings, **LinkedIn**'s
+   *Connections.csv* (URL → LinkedIn link, Company + Position → title and one-line description,
+   Connected On → Date met), **Google Contacts** (Given/Family Name, *Phone 1 – Label/Value*
+   pairs, Labels → tags), **Outlook** (Mobile/Business/Home Phone, E-mail Address, Job Title, Web
+   Page…), common variants (`first_name`, `Surname`, `Cell`, `Twitter`…) and the names of your own
+   fields. Change any match; *— don't import —* leaves a column out.
+   - Also available: *Phone / Email / Address (labelled from the column)* — the heading becomes the
+     label (“Business Phone” → Business); *Other phones / emails / addresses / links* — cells like
+     `Office: 555-0100; Fax: 555-0199`; *Company* — added to the one-line description.
+2. Pick the tab, and optionally *Put them in a new directory*.
+3. The preview lists: rows ready; **skipped** rows (no first name; the example row); **names that
+   already exist** in that tab or twice in the file — allowed, and *Skip the N whose name is
+   already in …* leaves them out; **warnings** (a date that isn't a date, a yes/no field holding
+   something else — those cells are left empty); and the first ten people. Row numbers match
+   Excel's.
+4. Import. **A backup is made first.** New people go to the end of the tab's top level (or into
+   the new directory).
+5. **Undo this import** — right away, or later from *Recent imports* (the last 20) — deletes
+   exactly the people that import added, plus its new directory if nothing else is in it.
+
+What a CSV can't carry — photos, more than the notes in one cell, and where in the tree someone
+sits — is added afterwards on their card, or by dragging them onto a directory.
+
+### Exporting
+
+*Export people to a spreadsheet*: everyone, or one tab → `people-<date>.csv` (or
+`people-<tab>-<date>.csv`). The columns are the template's, then:
+
+| Column | Holds |
+| --- | --- |
+| Other Phones / Other Emails / Other Addresses | contacts that didn't fit a named column, as `Label: value; …` |
+| Other Links | links other than the named ones, as `Name: address; …` |
+| Tab, Directory | where the person sits (`Active clients › Healthcare`) — ignored when importing |
+
+Notes are all in the Notes cell, newest first, separated by `---`. Because the columns are the
+template's, **an export can be edited in Excel and imported again** (into any tab). Photos are not
+included.
+
+## Import and export (JSON)
+
+**Settings → Import & export**, the JSON cards — for moving *everything* (tabs, directories,
+people, custom fields).
 
 **Import** reads a JSON file (default: the JSON data source file) into the source you use now:
 

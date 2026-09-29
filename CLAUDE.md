@@ -48,11 +48,16 @@ The person using it is not a developer — every message the page shows is a pla
    once overrode every button's text colour).
 10. **knex is CommonJS**: import its default export (`store/sql.ts`); the named import works under
     Vitest but crashes plain Node.
-11. **Scripts:** `-x`/`--long` options + bare words + `-h`; keep them idempotent and plain-spoken.
+11. **CSV (server/src/csv.ts):** only First Name is required; people land at the chosen tab's top
+    level (or a new directory); backup first; every import is undoable (`csv-imports.json` in the
+    backups dir); export columns = template columns + Other… + Tab + Directory so exports re-import.
+    Social link columns: LinkedIn, Facebook, Instagram, X, TikTok, YouTube, Website. New person
+    fields need a template column + alias + export cell.
+12. **Scripts:** `-x`/`--long` options + bare words + `-h`; keep them idempotent and plain-spoken.
     Setup scripts offer to install missing tools with Homebrew (ask first unless `-y`).
-12. **Testing:** `npm test` (plus `PM_TEST_MYSQL=…` against a THROWAWAY MariaDB — see
+13. **Testing:** `npm test` (plus `PM_TEST_MYSQL=…` against a THROWAWAY MariaDB — see
     Docs/DEVELOPMENT.md). Test by hand on a scratch config (`PM_CONFIG=…`, another port), never on
     Matt's `config.json` / `data/`. Headless-Chrome checks: Radix menus open on pointerdown, not
     `.click()`; drag needs a press held ~250 ms.
-13. **Commits:** one per feature with a dated CHANGELOG entry; explicit `git add <paths>`; never
+14. **Commits:** one per feature with a dated CHANGELOG entry; explicit `git add <paths>`; never
     push — Matt pushes. Keep README high-level; details in Docs/.

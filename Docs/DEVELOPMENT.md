@@ -38,6 +38,7 @@ PM_CONFIG=/tmp/pm/config.json node dist/node/server/src/index.js
 | --- | --- |
 | `store.test.ts` | the Store contract, on every data source: tabs, directories, full person round-trip, placement, search, custom fields, export / replace / append, a SQLite file that isn't built, a damaged JSON file |
 | `service.test.ts` | the rules, on every data source: first name required, duplicate names, search (substring, case, accents, tags, matched tag), empty-only deletes and their message, moves (people, directories across tabs, into itself), notes, photos (names, clashes, limit, main, deletion), custom fields (type changes, archive, usage, delete flows) |
+| `csv.test.ts` | dates, column recognition (template, LinkedIn, Google, Outlook), the template and its skipped example row, preview (duplicates, skipped rows, warnings, nothing saved), import (top level or a new directory, backup first, first name only), undo, corrected column choices, Google label/value pairs, `;` files with a byte-order mark, and export → import round trips — on every data source |
 | `api.test.ts` | the HTTP app: login off/on (setup, sign in/out, wrong password, reset by deleting the file), Host and same-origin guards, settings (restart-needed, masked password, file permissions), switching JSON → SQLite + build + validate + import (replace and add) + export, validation errors/warnings, backups (contents, restore, upload, delete) |
 
 **MySQL.** The store and rules suites also run on MySQL when `PM_TEST_MYSQL` is set to

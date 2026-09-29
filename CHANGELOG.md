@@ -4,6 +4,18 @@ All notable changes to People Manager (Keep a Changelog style; dates are when th
 
 ## [Unreleased]
 
+### Added
+- 2026-09-29: **People from and to spreadsheets (CSV)** — Settings → Import & export.
+  *Download CSV template* (every field, LinkedIn/Facebook/Instagram/X/TikTok/YouTube/Website link
+  columns, your own fields, a self-skipping example row). *Import*: pick a CSV and a tab; columns
+  are matched automatically (the template, LinkedIn's Connections.csv including its preamble,
+  Google Contacts, Outlook, common variants, your field names) and can be corrected; preview with
+  rows ready / skipped / names already there (optionally skipped) / unreadable dates and the first
+  ten people; only First Name required; people land at the tab's top level or a new directory;
+  automatic backup first; **Undo this import** (also from *Recent imports*). *Export*: everyone or
+  one tab, the template's columns plus Other phones/emails/addresses/links, Tab and Directory — an
+  export re-imports cleanly. Excel-friendly files (UTF-8 marker, CRLF). 24 new tests.
+
 ### Changed
 - 2026-09-29: **Viewing a photo** opens it in a floating window on top of the card (with ‹ › and
   the arrow keys to step through that person's photos) instead of a new browser tab. The menu item

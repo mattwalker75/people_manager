@@ -76,6 +76,21 @@ session.
 | `POST /api/datasource/test` | a `dataSource` object to try without switching → its status |
 | `POST /api/datasource/build` | `{}` to build an empty source; `{ rebuild: true, confirm: "REBUILD" }` to erase and rebuild |
 
+## Spreadsheets (CSV)
+
+| Method & path | |
+| --- | --- |
+| `GET /api/csv/template` | `people-template.csv` (every field, your custom fields, an example row) |
+| `GET /api/csv/export?tabId=` | everyone (or one tab) as CSV — template columns + Other… + Tab + Directory |
+| `POST /api/csv/preview` | `{ csv, tabId, mapping? }` → `{ columns: [{ index, header, target, sample }], targets, total, ready, skipped, duplicates, warnings, sample, tab }`; 422 with `details: { headers, targets, guessed }` when no column is First name |
+| `POST /api/csv/import` | `{ csv, tabId, mapping?, newDirectory?, skipDuplicates?, fileName? }` → `{ importId, added, skipped, warnings, failed, tab, directory, directoryId, backup }` (backs up first) |
+| `GET /api/csv/imports` | the last 20 imports `{ id, at, file, tab, directory, count, undone }` |
+| `POST /api/csv/imports/:id/undo` | → `{ removed, directoryRemoved }` |
+
+`mapping` is `{ "<column index>": "<target>" }`; targets are listed in the preview (`firstName`,
+`phone:Mobile`, `email:*`, `link:LinkedIn`, `otherPhones`, `tags`, `custom:<field id>`, `ignore`…).
+CSV bodies may be up to 30 MB.
+
 ## Import, export, backups
 
 | Method & path | |

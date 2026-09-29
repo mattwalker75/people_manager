@@ -258,14 +258,31 @@ export class Service {
     const tabId = (input as { tabId?: Id }).tabId;
     const directoryId = (input as { directoryId?: Id | null }).directoryId || null;
     if (!tabId) throw new UserError("Choose a tab for the new person.");
-    await this.tabOrThrow(tabId);
-    if (directoryId) { const d = await this.dirOrThrow(directoryId); if (d.tabId !== tabId) throw new UserError("That directory is in another tab."); }
-    const t = now();
-    const base: Person = { ...EMPTY_FIELDS, id: newId(), tabId, directoryId, position: await this.store.countPeople({ tabId, directoryId }),
-      keyFacts: [], contacts: [], links: [], notes: [], photos: [], mainPhotoId: null, tags: [], custom: {}, createdAt: t, updatedAt: t };
-    const p = await this.fromInput(input, base);
+    await this.checkPlace(tabId, directoryId);
+    const p = await this.buildPerson(input, tabId, directoryId, await this.store.countPeople({ tabId, directoryId }));
     await this.store.insertPerson(p);
     return this.getPerson(p.id);
+  }
+
+  /** The tab exists, and the directory (if any) is in it. */
+  async checkPlace(tabId: Id, directoryId: Id | null): Promise<void> {
+    await this.tabOrThrow(tabId);
+    if (directoryId) { const d = await this.dirOrThrow(directoryId); if (d.tabId !== tabId) throw new UserError("That directory is in another tab."); }
+  }
+
+  /** A validated, not-yet-saved person (used by Add person and by the CSV import). */
+  async buildPerson(input: unknown, tabId: Id, directoryId: Id | null, position: number, notes: string[] = []): Promise<Person> {
+    const t = now();
+    const base: Person = { ...EMPTY_FIELDS, id: newId(), tabId, directoryId, position,
+      keyFacts: [], contacts: [], links: [], notes: [], photos: [], mainPhotoId: null, tags: [], custom: {}, createdAt: t, updatedAt: t };
+    const p = await this.fromInput(input, base);
+    p.notes = notes.map((body) => body.trim()).filter(Boolean).map((body) => ({ id: newId(), body, createdAt: t, updatedAt: t }));
+    return p;
+  }
+
+  /** Save many new people in one go (the CSV import). */
+  async addPeople(people: Person[]): Promise<void> {
+    if (people.length) await this.store.appendAll({ format: "people-manager", version: 1, exportedAt: now(), tabs: [], directories: [], people, customFields: [] });
   }
 
   /** Save the edit form: everything except placement, notes and photos (they have their own actions). */

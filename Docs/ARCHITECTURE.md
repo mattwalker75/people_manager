@@ -21,7 +21,8 @@ server/src/
   auth.ts           the optional login (password file, bcrypt, sessions)
   security.ts       Host check, same-origin writes, network addresses
   service.ts        the rules: placement and order, empty-only deletes, moves, search, notes, photos, custom fields
-  transfer.ts       validation report, import (replace / add alongside), export
+  transfer.ts       validation report, import (replace / add alongside), export (JSON)
+  csv.ts            spreadsheets: template, column recognition, preview, import + undo, export (papaparse)
   backups.ts        backup zips and restore
   store/types.ts    the Store interface every data source implements
   store/json.ts     JSON file data source

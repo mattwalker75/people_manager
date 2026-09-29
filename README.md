@@ -24,6 +24,8 @@ stay in a file or database you choose; nothing is sent anywhere.
 - **Organise by dragging**: press and hold a card or directory, drop it on another directory,
   a tab, or between cards. Or use *Move to…*.
 - **Your own fields** (yes/no, one line, a paragraph) with safe ways to remove them later.
+- **Spreadsheets:** download a CSV template, import people from Excel, LinkedIn, Google Contacts
+  or Outlook (only First Name required; preview first, undo after), and export everyone to CSV.
 - **JSON file, SQLite or MySQL** as the data source — switch in Settings; import, export and
   validate between them.
 - **Light, dark, follow-the-system, or your own theme**; optional **login**; **backups**.

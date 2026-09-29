@@ -16,7 +16,7 @@ const SECTIONS: [string, string, string][] = [
   ["general", "General", "Port, network, photos"],
   ["security", "Security", "Login"],
   ["data", "Data source", "JSON, SQLite, MySQL"],
-  ["transfer", "Import & export", ""],
+  ["transfer", "Import & export", "CSV, JSON"],
   ["fields", "People fields", "Your own fields"],
   ["appearance", "Appearance", "Themes"],
   ["backups", "Backups", ""],
