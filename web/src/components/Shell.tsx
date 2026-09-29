@@ -4,8 +4,8 @@
  * sub-directories and people as cards in the main area, search at the top.
  *
  * Drag and drop (press and hold ~¼ s to pick something up):
- *   person card  → another card (reorder) · a directory tile or sidebar row (move into) · a tab (move to its top level)
- *   directory    → another tile (reorder) · a sidebar row (move into) · a tab (move to its top level)
+ *   person card       → another card (reorder) · a sidebar directory (move into) · a tab (move to its top level)
+ *   sidebar directory → another sidebar directory (move into) · the tab's top-level row · a tab
  */
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -101,17 +101,11 @@ export function Shell({ state }: { state: AppState }) {
           qc.setQueryData(["people", tabId, dirId ?? "root"], next);
           await actions.movePerson(p.id, tabId, dirId, to);
         }
-      } else if (o.kind === "dir") await actions.movePerson(p.id, tabId, o.id, undefined, `Moved to ${o.dir.name}.`);
-      else if (o.kind === "into") { if (o.dirId !== p.directoryId) await actions.movePerson(p.id, tabId, o.dirId, undefined, `Moved to ${dirName(o.dirId)}.`); }
+      } else if (o.kind === "into") { if (o.dirId !== p.directoryId) await actions.movePerson(p.id, tabId, o.dirId, undefined, `Moved to ${dirName(o.dirId)}.`); }
       else if (o.kind === "tab" && o.tabId !== p.tabId) await actions.movePerson(p.id, o.tabId, null, undefined, `Moved to ${tabName(o.tabId)}.`);
     } else if (a.kind === "dir") {
       const d = a.dir;
-      if (o.kind === "dir") {
-        if (o.dir.parentId === d.parentId) {
-          const siblings = dirs.filter((x) => x.parentId === d.parentId).sort((x, y) => x.position - y.position);
-          await actions.moveDirectory(d.id, tabId, d.parentId, siblings.findIndex((x) => x.id === o.id));
-        } else await actions.moveDirectory(d.id, tabId, o.id, undefined, `Moved into ${o.dir.name}.`);
-      } else if (o.kind === "into") { if (o.dirId !== d.id && o.dirId !== d.parentId) await actions.moveDirectory(d.id, tabId, o.dirId, undefined, `Moved into ${dirName(o.dirId)}.`); }
+      if (o.kind === "into") { if (o.dirId !== d.id && o.dirId !== d.parentId) await actions.moveDirectory(d.id, tabId, o.dirId, undefined, `Moved into ${dirName(o.dirId)}.`); }
       else if (o.kind === "tab" && o.tabId !== d.tabId) await actions.moveDirectory(d.id, o.tabId, null, undefined, `Moved to ${tabName(o.tabId)}.`);
     }
   };
@@ -177,7 +171,7 @@ export function Shell({ state }: { state: AppState }) {
         <main className="min-w-0 flex-1 overflow-auto">
           {searching ? <SearchResults q={q} onOpen={setPersonId} onClear={() => setQuery("")} />
             : <MainPane tab={tab!} dirs={dirs} dirId={dirId} people={peopleQ.data} loading={peopleQ.isLoading} onSelectDir={selectDir}
-                onOpenPerson={setPersonId} onAddPerson={() => setCreating({ tabId: tab!.id, directoryId: dirId })} dragging={dragging} />}
+                onOpenPerson={setPersonId} onAddPerson={() => setCreating({ tabId: tab!.id, directoryId: dirId })} />}
         </main>
       </div>
     );
@@ -204,7 +198,7 @@ export function Shell({ state }: { state: AppState }) {
         </DragOverlay>
       </DndContext>
       {dragging && <div className="pointer-events-none fixed bottom-24 left-1/2 z-50 -translate-x-1/2 rounded-2xl bg-ink px-4 py-2.5 text-[13px] text-bg shadow-lift">
-        Moving <b>{dragging.kind === "person" ? `${dragging.person.firstName} ${dragging.person.lastName}`.trim() : dragging.kind === "dir" ? dragging.dir.name : ""}</b> — drop on a directory, a tab, or between cards · Esc cancels
+        Moving <b>{dragging.kind === "person" ? `${dragging.person.firstName} ${dragging.person.lastName}`.trim() : dragging.kind === "dir" ? dragging.dir.name : ""}</b> — drop it on a directory in the sidebar{dragging.kind === "person" ? ", a tab, or between cards" : " or a tab"} · Esc cancels
       </div>}
       <PersonDialog state={state} personId={personId} createAt={creating} onClose={() => { setPersonId(null); setCreating(null); }} onCreated={(id) => { setCreating(null); setPersonId(id); }} />
       <NameDialog open={newTab} onClose={() => setNewTab(false)} title="New tab" submitLabel="Create tab"

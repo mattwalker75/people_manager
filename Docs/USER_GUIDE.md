@@ -24,13 +24,13 @@ organise bookmarks. This guide walks through everything the app does.
 ```
 ┌───────────────────────────────────────────────────────────────────────────┐
 │ People Manager      [ Search by name, nickname or tag ⌘K ]   [+ Add person] ⚙ │
-│ [Clients] Networking  Personal  Vendors   ⋯  + Tab                          │
+│ [Clients ⋯] Networking  Personal  Vendors   + Tab                           │
 │ ┌─────────────┬───────────────────────────────────────────────────────────┐ │
 │ │ DIRECTORIES │ Clients › Active clients                                  │ │
 │ │ ≡ Clients   │ Active clients                                            │ │
 │ │ ▸ Active… 62│ Paying clients and current engagements                    │ │
-│ │   Health…21 │ [Healthcare] [Law firms] [Tech companies]   ← directories  │ │
-│ │ ▸ Prospects │ [card] [card] [card]                        ← people       │ │
+│ │   Health…21 │ [card] [card] [card]                        ← people       │ │
+│ │ ▸ Prospects │ [card] [card]                                              │ │
 │ └─────────────┴───────────────────────────────────────────────────────────┘ │
 └───────────────────────────────────────────────────────────────────────────┘
 ```
@@ -40,14 +40,15 @@ organise bookmarks. This guide walks through everything the app does.
   own name) is the tab's top level. The number next to a directory is how many people are
   in it, including everything inside it.
 - **The main area** shows where you are (the breadcrumb), the directory's name and one-line
-  description, its sub-directories as tiles, and its people as cards.
+  description, and the people in it as cards. Directories live only in the sidebar.
 
 ## Tabs
 
 - **Create:** `+ Tab` next to the tabs.
-- **Rename:** double-click the tab, or the `⋯` next to the tabs → *Rename tab*.
-- **Reorder:** `⋯` → *Move left* / *Move right*.
-- **Delete:** `⋯` → *Delete tab…*. A tab must be **empty** first — no directories and no
+- **Rename:** double-click the tab, or the `⋯` inside the selected tab (next to its name) →
+  *Rename tab*.
+- **Reorder:** the tab's `⋯` → *Move left* / *Move right*.
+- **Delete:** the tab's `⋯` → *Delete tab…*. A tab must be **empty** first — no directories and no
   people. If it isn't, the app tells you what is still in it (the first five things, then
   “…and N more”).
 
@@ -157,16 +158,15 @@ Healthcare*). Click a match to open the card; **Esc** or *Clear search* goes bac
 
 ## Moving things around
 
-**Drag:** press and **hold** a person card or a directory (about a quarter of a second) — it
-lifts — then drop it:
+**Drag:** press and **hold** a person card in the main area, or a directory in the sidebar
+(about a quarter of a second) — it lifts — then drop it. The place it will land is highlighted.
 
 | Drop it on… | What happens |
 | --- | --- |
 | another card | the person moves to that position (reorder) |
-| a directory tile, or a directory in the sidebar | it moves **into** that directory |
+| a directory in the sidebar | it moves **into** that directory |
 | the tab's name at the top of the sidebar | it moves to the tab's top level |
 | a tab | it moves to that tab's top level |
-| another directory tile (for a directory) | reorder |
 
 **Esc** cancels a drag. A directory moves with **everything inside it**, even to another tab.
 A directory can't be moved inside itself.

@@ -97,7 +97,7 @@ export function SecuritySection({ state }: { state: AppState }) {
 }
 
 // ---------------------------------------------------------------- appearance
-const PRESETS: [string, string, string, string][] = [["light", "Light", "#eef1f0", "#0f766e"], ["dark", "Dark", "#0e1312", "#2ab3a2"], ["system", "System", "#eef1f0", "#0e1312"]];
+const PRESETS: [string, string, string, string][] = [["light", "Light", "#eef1f0", "#0f766e"], ["dark", "Dark", "#1a201f", "#3cc2b1"], ["system", "System", "#eef1f0", "#1a201f"]];
 
 export function AppearanceSection({ state }: { state: AppState }) {
   const save = useSaveSettings();

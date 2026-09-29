@@ -4,6 +4,15 @@ All notable changes to People Manager (Keep a Changelog style; dates are when th
 
 ## [Unreleased]
 
+### Changed
+- 2026-09-29: The **⋯ menu for a tab** now sits inside the selected tab, next to its name.
+- 2026-09-29: The **main area shows people only** — directories live only in the sidebar. To move
+  someone, press and hold their card and drop it on a directory in the sidebar (or a tab). The
+  empty-directory message points to the sidebar when the directory has sub-directories.
+- 2026-09-29: **Lighter dark theme** — from near-black (#0e1312) to a "dimmed" charcoal-teal
+  (#1a201f page, lighter #222928 / #293130 surfaces) in the #121212–#1E1E1E band Material and
+  GitHub recommend, with off-white text and a slightly brighter accent.
+
 ### Added
 - 2026-09-29: **Documentation.** High-level `README.md` linking into `Docs/`: USER_GUIDE,
   INSTALLATION, SCRIPTS, CONFIGURATION, DATA (sources, import/export, validation, backups,

@@ -20,7 +20,9 @@ The person using it is not a developer — every message the page shows is a pla
 
 ## Rules that exist for a reason
 1. **Matt's chosen design** ("C · Atelier", mockups artifact LjBq3FZo5n4Q1qab6EfzYH): tabs on top,
-   sidebar = directories ONLY, people as CARDS in the main area; person card = photo column +
+   sidebar = directories ONLY (the main area shows NO directory tiles — Matt removed them;
+   moving = drag a card onto a sidebar directory), people as CARDS in the main area; the
+   selected tab carries its ⋯ menu next to its name; person card = photo column +
    key-fact tiles + section tabs (Overview · Contact & links · Notes · Details · More), tab bar
    sticky, right side scrolls. Newsreader + Public Sans, teal accent. Keep it.
 2. **Spec decisions:** first name is the only required field; duplicate names allowed; display

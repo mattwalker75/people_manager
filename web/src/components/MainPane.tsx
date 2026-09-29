@@ -6,35 +6,14 @@
 import { useMemo, useState } from "react";
 import { SortableContext, rectSortingStrategy, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Folder, FolderInput, FolderPlus, MoreHorizontal, Pencil, Plus, Trash2, UserRound } from "lucide-react";
+import { FolderInput, FolderPlus, MoreHorizontal, Pencil, Plus, Trash2, UserRound } from "lucide-react";
 import type { Directory, Id, PersonSummary, Tab } from "../../../shared/types";
 import { useActions } from "../lib/actions";
 import { summaryPhoto } from "../lib/format";
 import type { DirectoryWithCount } from "../lib/hooks";
 import { MoveDialog, NameDialog } from "./dialogs";
 import type { DragData } from "./Shell";
-import { totalsFor } from "./Sidebar";
 import { Avatar, Button, cx, EmptyState, IconButton, Menu, NameWithNick, Spinner } from "./ui";
-
-function DirTile({ d, total, onOpen, dragging }: { d: DirectoryWithCount; total: number; onOpen: () => void; dragging: DragData | null }) {
-  const s = useSortable({ id: `dir:${d.id}`, data: { kind: "dir", id: d.id, dir: d } satisfies DragData });
-  const personOver = s.isOver && dragging?.kind === "person";
-  return (
-    <div ref={s.setNodeRef} style={{ transform: CSS.Translate.toString(s.transform), transition: s.transition }} {...s.attributes} {...s.listeners}
-      className={cx("group relative flex items-center gap-3 rounded-2xl border bg-surface p-3.5 text-left transition",
-        s.isDragging ? "border-dashed border-line-2 opacity-40" : "border-line hover:border-line-2 hover:shadow-soft",
-        personOver && "border-accent bg-accent-softer ring-2 ring-accent")}>
-      <button type="button" onClick={onOpen} className="flex min-w-0 flex-1 items-center gap-3 text-left">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-softer text-accent"><Folder size={19} /></span>
-        <span className="min-w-0">
-          <span className="block truncate font-semibold">{d.name}</span>
-          <span className="block truncate text-[12.5px] text-mute">{personOver ? `Drop to move into ${d.name}` : d.description || `${total} ${total === 1 ? "person" : "people"}`}</span>
-        </span>
-      </button>
-      <span className="text-[12px] text-faint">{total || ""}</span>
-    </div>
-  );
-}
 
 function PersonCard({ p, onOpen, onMove, onDelete }: { p: PersonSummary; onOpen: () => void; onMove: () => void; onDelete: () => void }) {
   const s = useSortable({ id: `person:${p.id}`, data: { kind: "person", id: p.id, person: p } satisfies DragData });
@@ -62,14 +41,13 @@ function PersonCard({ p, onOpen, onMove, onDelete }: { p: PersonSummary; onOpen:
   );
 }
 
-export function MainPane({ tab, dirs, dirId, people, loading, onSelectDir, onOpenPerson, onAddPerson, dragging }: {
+export function MainPane({ tab, dirs, dirId, people, loading, onSelectDir, onOpenPerson, onAddPerson }: {
   tab: Tab; dirs: DirectoryWithCount[]; dirId: Id | null; people?: PersonSummary[]; loading: boolean; onSelectDir: (id: Id | null) => void;
-  onOpenPerson: (id: Id) => void; onAddPerson: () => void; dragging: DragData | null;
+  onOpenPerson: (id: Id) => void; onAddPerson: () => void;
 }) {
   const actions = useActions();
   const [dialog, setDialog] = useState<null | "newDir" | "editDir" | "moveDir" | "renameTab" | { movePerson: PersonSummary }>(null);
   const dir = dirs.find((d) => d.id === dirId) ?? null;
-  const totals = useMemo(() => totalsFor(dirs), [dirs]);
   const trail = useMemo(() => { const t: Directory[] = []; let cur = dir; while (cur) { t.unshift(cur); cur = dirs.find((d) => d.id === cur!.parentId) ?? null; } return t; }, [dir, dirs]);
   const subdirs = dirs.filter((d) => d.parentId === dirId).sort((a, b) => a.position - b.position);
   const list = people ?? [];
@@ -105,31 +83,22 @@ export function MainPane({ tab, dirs, dirId, people, loading, onSelectDir, onOpe
           ]} />
       </div>
 
-      {subdirs.length > 0 && (
-        <section aria-label="Directories" className="flex flex-col gap-2.5">
-          <div className="text-[11.5px] font-semibold uppercase tracking-[0.08em] text-faint">Directories</div>
-          <SortableContext items={subdirs.map((d) => `dir:${d.id}`)} strategy={rectSortingStrategy}>
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-3">
-              {subdirs.map((d) => <DirTile key={d.id} d={d} total={totals[d.id] || 0} onOpen={() => onSelectDir(d.id)} dragging={dragging} />)}
-            </div>
-          </SortableContext>
-        </section>
-      )}
-
       <section aria-label="People" className="flex flex-col gap-2.5">
-        {subdirs.length > 0 && list.length > 0 && <div className="text-[11.5px] font-semibold uppercase tracking-[0.08em] text-faint">People</div>}
         {loading ? <Spinner /> : list.length ? (
           <SortableContext items={list.map((p) => `person:${p.id}`)} strategy={rectSortingStrategy}>
             <div className="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-3.5">
               {list.map((p) => <PersonCard key={p.id} p={p} onOpen={() => onOpenPerson(p.id)} onMove={() => setDialog({ movePerson: p })} onDelete={() => actions.deletePerson(p)} />)}
             </div>
           </SortableContext>
-        ) : !subdirs.length ? (
-          <EmptyState title={dir ? `${dir.name} is empty` : `${tab.name} is empty`}
+        ) : (
+          <EmptyState title={`Nobody is in ${dir ? dir.name : `the top level of ${tab.name}`} yet`}
             action={<><Button variant="primary" icon={<Plus size={15} />} onClick={onAddPerson}>Add a person</Button><Button icon={<FolderPlus size={15} />} onClick={() => setDialog("newDir")}>New directory</Button></>}>
-            Add a person here, make a directory, or drag people in from elsewhere (press and hold a card to pick it up).
+            {subdirs.length
+              ? <>It holds {subdirs.length} {subdirs.length === 1 ? "directory" : "directories"} — open {subdirs.length === 1 ? "it" : "them"} in the sidebar on the left. Add a person here, or drag people in from elsewhere.</>
+              : <>Add a person here, make a directory, or drag people in: press and hold a card, then drop it on a directory in the sidebar.</>}
           </EmptyState>
-        ) : null}
+        )}
+        {list.length > 0 && <p className="text-[12.5px] text-faint">Press and hold a card to move it — drop it between cards to reorder, or on a directory in the sidebar (or on a tab) to move it there.</p>}
       </section>
 
       <NameDialog open={dialog === "newDir"} onClose={() => setDialog(null)} withDescription submitLabel="Create directory" title={dir ? `New directory inside ${dir.name}` : `New directory in ${tab.name}`}

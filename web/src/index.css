@@ -28,24 +28,26 @@
   color-scheme: light;
 }
 :root[data-theme="dark"] {
-  --bg: #0e1312;
-  --surface: #151c1b;
-  --surface-2: #1b2423;
-  --ink: #e4edeb;
-  --ink-2: #c2cfcc;
-  --mute: #93a3a0;
-  --faint: #778784;
-  --line: #243130;
-  --line-2: #33423f;
-  --accent: #2ab3a2;
-  --accent-ink: #03201c;
-  --accent-soft: #17423c;
-  --accent-softer: #10302b;
-  --accent-text: #86e3d6;
-  --danger: #f0776b;
-  --danger-soft: #3a1c1a;
-  --warn: #f0c46a;
-  --warn-soft: #33290f;
+  /* A "dimmed" dark (the #121212–#1E1E1E band Material and GitHub use, tinted to the
+     teal): raised surfaces are lighter than the page, text is off-white, not pure white. */
+  --bg: #1a201f;
+  --surface: #222928;
+  --surface-2: #293130;
+  --ink: #e3ebe9;
+  --ink-2: #c4cfcc;
+  --mute: #9eaeab;
+  --faint: #869693;
+  --line: #333d3b;
+  --line-2: #43504d;
+  --accent: #3cc2b1;
+  --accent-ink: #062521;
+  --accent-soft: #1f4843;
+  --accent-softer: #1b3935;
+  --accent-text: #8fe6da;
+  --danger: #f28b80;
+  --danger-soft: #43282a;
+  --warn: #f2c877;
+  --warn-soft: #3b3220;
   --shadow: 0 0 0;
   color-scheme: dark;
 }

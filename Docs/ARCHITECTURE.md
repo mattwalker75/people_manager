@@ -86,8 +86,9 @@ tab changes — carries every nested directory and person to the new tab.
 five direct children (directories first) and how many more there are.
 
 **Drag and drop (page).** One `DndContext` wraps the tabs, sidebar and main area. The pointer
-sensor starts a drag after a ~250 ms press (so clicks still open things). Person cards and
-directory tiles are *sortable* within their grids; sidebar rows and tabs are *drop targets*.
+sensor starts a drag after a ~250 ms press (so clicks still open things). Person cards are
+*sortable* within their grid; sidebar directories are draggable and are *drop targets*, as are
+the tab's top-level row and the tabs.
 `Shell.onDragEnd` turns “what was dropped on what” into a move call (see the table in the user
 guide).
 
