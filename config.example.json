@@ -1,0 +1,46 @@
+{
+  "_comment": "People Manager settings. INSTALL_APP.sh copies this to config.json (which is never committed). Everything here is also editable in the app under Settings. Paths are relative to this file. Only server.port and server.allowNetwork need a restart (./PEOPLE.sh --restart); everything else applies at once.",
+
+  "server": {
+    "_comment": "allowNetwork false = only this computer can open the app (127.0.0.1). true = other devices on your network can too, at http://<this computer>:<port>. Both need a restart.",
+    "port": 8400,
+    "allowNetwork": false
+  },
+
+  "security": {
+    "_comment": "loginEnabled true = ask for a login name and password. The credentials live in passwordFile (bcrypt hash, owner-only). No file = you are asked to create a login. Forgot the password? Delete the file and reload — your people are not touched.",
+    "loginEnabled": false,
+    "passwordFile": "./.password",
+    "sessionHours": 12
+  },
+
+  "dataSource": {
+    "_comment": "type is json, sqlite or mysql. A new SQLite or MySQL source needs its tables built once: Settings → Data source → Build database, or ./SETUP_SQLITE_DB.sh / ./SETUP_MYSQL_DB.sh.",
+    "type": "json",
+    "json": { "path": "./data/people.json" },
+    "sqlite": { "path": "./data/people.db" },
+    "mysql": {
+      "host": "localhost",
+      "port": 3306,
+      "database": "people_manager",
+      "user": "pm_app",
+      "password": ""
+    }
+  },
+
+  "photos": {
+    "_comment": "Photos are stored as files in dir/<person id>/. They are never part of an export or backup — copy this folder yourself.",
+    "dir": "./data/images",
+    "maxPerPerson": 5
+  },
+
+  "appearance": {
+    "_comment": "theme is light, dark, system (follows your computer) or the id of one of your customThemes (made in Settings → Appearance).",
+    "theme": "light",
+    "customThemes": []
+  },
+
+  "backups": {
+    "dir": "./data/backups"
+  }
+}
