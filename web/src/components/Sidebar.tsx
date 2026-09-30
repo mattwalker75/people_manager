@@ -97,7 +97,7 @@ export function Sidebar({ tab, dirs, topLevelPeople, selected, onSelect, expande
             className={cx("flex h-[38px] w-full items-center gap-2 rounded-xl px-3 text-left text-[13.5px] transition",
               selected === null ? "bg-accent-soft font-semibold text-accent-text" : "text-ink-2 hover:bg-surface-2",
               rootDrop.isOver && "bg-accent-softer ring-2 ring-accent ring-inset")}>
-            <Layers size={16} /><span className="flex-1 truncate">{tab.name}</span><span className="text-[12px] text-faint">{topLevelPeople || ""}</span>
+            <Layers size={16} /><span className="flex-1 truncate">Top level</span><span className="text-[12px] text-faint">{topLevelPeople || ""}</span>
           </button>
         </div>
         {tree(null, 0)}
@@ -106,7 +106,7 @@ export function Sidebar({ tab, dirs, topLevelPeople, selected, onSelect, expande
       </div>
 
       <NameDialog open={dialog?.kind === "new"} onClose={() => setDialog(null)} withDescription submitLabel="Create directory"
-        title={dialog?.kind === "new" && dialog.parentId ? `New directory inside ${dirs.find((d) => d.id === dialog.parentId)?.name}` : `New directory in ${tab.name}`}
+        title={dialog?.kind === "new" && dialog.parentId ? `New directory inside ${dirs.find((d) => d.id === dialog.parentId)?.name}` : "New directory at the top level"}
         onSubmit={async (name, desc) => {
           const parentId = dialog?.kind === "new" ? dialog.parentId : null;
           const d = await actions.createDirectory(tab.id, parentId, name, desc);

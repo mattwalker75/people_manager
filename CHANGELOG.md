@@ -5,6 +5,10 @@ All notable changes to People Manager (Keep a Changelog style; dates are when th
 ## [Unreleased]
 
 ### Changed
+- 2026-09-29: The tab's name is no longer repeated inside the tab: the sidebar's first row and
+  the location line say **Top level** instead (the location line is hidden at the top level itself).
+
+### Changed
 - 2026-09-29: **Phone numbers take shape as you type** on the person form: `5125550148` becomes
   `(512) 555-0148` digit by digit; anything past the tenth digit becomes the extension
   (`11122233334444` → `(111) 222-3333 x4444`); `+1` or a `1` set apart by a space is the country

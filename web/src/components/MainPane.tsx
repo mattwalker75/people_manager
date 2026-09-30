@@ -6,7 +6,7 @@
 import { useMemo, useState } from "react";
 import { SortableContext, rectSortingStrategy, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { FolderInput, FolderPlus, MoreHorizontal, Pencil, Plus, Trash2, UserRound } from "lucide-react";
+import { FolderInput, FolderPlus, Layers, MoreHorizontal, Pencil, Plus, Trash2, UserRound } from "lucide-react";
 import type { Directory, Id, PersonSummary, Tab } from "../../../shared/types";
 import { useActions } from "../lib/actions";
 import { summaryPhoto } from "../lib/format";
@@ -54,19 +54,22 @@ export function MainPane({ tab, dirs, dirId, people, loading, onSelectDir, onOpe
 
   return (
     <div className="flex flex-col gap-5 px-8 py-6">
-      <nav aria-label="Where you are" className="flex flex-wrap items-center gap-1.5 text-[13px] text-mute">
-        <button type="button" onClick={() => onSelectDir(null)} className="hover:text-ink">{tab.name}</button>
-        {trail.map((d, i) => (
-          <span key={d.id} className="flex items-center gap-1.5">›
-            <button type="button" onClick={() => onSelectDir(d.id)} className={cx("hover:text-ink", i === trail.length - 1 && "text-ink")}>{d.name}</button>
-          </span>
-        ))}
-      </nav>
+      {/* Where you are inside this tab (the tab itself is already selected above, so it is not repeated). */}
+      {trail.length > 0 && (
+        <nav aria-label="Where you are" className="flex flex-wrap items-center gap-1.5 text-[13px] text-mute">
+          <button type="button" onClick={() => onSelectDir(null)} className="flex items-center gap-1 hover:text-ink"><Layers size={13} />Top level</button>
+          {trail.map((d, i) => (
+            <span key={d.id} className="flex items-center gap-1.5">›
+              <button type="button" onClick={() => onSelectDir(d.id)} className={cx("hover:text-ink", i === trail.length - 1 && "text-ink")}>{d.name}</button>
+            </span>
+          ))}
+        </nav>
+      )}
 
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">
-          <h1 className="font-display text-[30px] font-semibold leading-tight tracking-tight">{dir ? dir.name : tab.name}</h1>
-          <p className="mt-1 text-mute">{dir ? dir.description || " " : "Top level of this tab"}</p>
+          <h1 className="font-display text-[30px] font-semibold leading-tight tracking-tight">{dir ? dir.name : "Top level"}</h1>
+          <p className="mt-1 text-mute">{dir ? dir.description || "\u00a0" : "People in this tab who are not in a directory"}</p>
         </div>
         <Button size="sm" icon={<FolderPlus size={15} />} onClick={() => setDialog("newDir")}>New directory</Button>
         <Button size="sm" icon={<Plus size={15} />} onClick={onAddPerson}>Add person here</Button>
@@ -91,7 +94,7 @@ export function MainPane({ tab, dirs, dirId, people, loading, onSelectDir, onOpe
             </div>
           </SortableContext>
         ) : (
-          <EmptyState title={`Nobody is in ${dir ? dir.name : `the top level of ${tab.name}`} yet`}
+          <EmptyState title={`Nobody is in ${dir ? dir.name : "the top level"} yet`}
             action={<><Button variant="primary" icon={<Plus size={15} />} onClick={onAddPerson}>Add a person</Button><Button icon={<FolderPlus size={15} />} onClick={() => setDialog("newDir")}>New directory</Button></>}>
             {subdirs.length
               ? <>It holds {subdirs.length} {subdirs.length === 1 ? "directory" : "directories"} — open {subdirs.length === 1 ? "it" : "them"} in the sidebar on the left. Add a person here, or drag people in from elsewhere.</>
@@ -101,7 +104,7 @@ export function MainPane({ tab, dirs, dirId, people, loading, onSelectDir, onOpe
         {list.length > 0 && <p className="text-[12.5px] text-faint">Press and hold a card to move it — drop it between cards to reorder, or on a directory in the sidebar (or on a tab) to move it there.</p>}
       </section>
 
-      <NameDialog open={dialog === "newDir"} onClose={() => setDialog(null)} withDescription submitLabel="Create directory" title={dir ? `New directory inside ${dir.name}` : `New directory in ${tab.name}`}
+      <NameDialog open={dialog === "newDir"} onClose={() => setDialog(null)} withDescription submitLabel="Create directory" title={dir ? `New directory inside ${dir.name}` : "New directory at the top level"}
         onSubmit={(name, desc) => actions.createDirectory(tab.id, dirId, name, desc)} />
       <NameDialog open={dialog === "editDir"} onClose={() => setDialog(null)} withDescription submitLabel="Save" title="Rename directory" initialName={dir?.name} initialDescription={dir?.description}
         onSubmit={(name, desc) => actions.updateDirectory(dir!, name, desc)} />

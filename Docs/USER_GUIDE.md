@@ -27,8 +27,8 @@ organise bookmarks. This guide walks through everything the app does.
 │ People Manager      [ Search by name, nickname or tag ⌘K ]   [+ Add person] ⚙ │
 │ [Clients ⋯] Networking  Personal  Vendors   + Tab                           │
 │ ┌─────────────┬───────────────────────────────────────────────────────────┐ │
-│ │ DIRECTORIES │ Clients › Active clients                                  │ │
-│ │ ≡ Clients   │ Active clients                                            │ │
+│ │ DIRECTORIES │ Top level › Active clients                                │ │
+│ │ ≡ Top level │ Active clients                                            │ │
 │ │ ▸ Active… 62│ Paying clients and current engagements                    │ │
 │ │   Health…21 │ [card] [card] [card]                        ← people       │ │
 │ │ ▸ Prospects │ [card] [card]                                              │ │
@@ -37,8 +37,8 @@ organise bookmarks. This guide walks through everything the app does.
 ```
 
 - **Tabs** across the top are your biggest groupings.
-- **The sidebar** shows the selected tab's directories as a tree. The first row (the tab's
-  own name) is the tab's top level. The number next to a directory is how many people are
+- **The sidebar** shows the selected tab's directories as a tree. The first row, **Top
+  level**, is the tab itself — people who are not in any directory. The number next to a directory is how many people are
   in it, including everything inside it.
 - **The main area** shows where you are (the breadcrumb), the directory's name and one-line
   description, and the people in it as cards. Directories live only in the sidebar.
@@ -170,7 +170,7 @@ Healthcare*). Click a match to open the card; **Esc** or *Clear search* goes bac
 | --- | --- |
 | another card | the person moves to that position (reorder) |
 | a directory in the sidebar | it moves **into** that directory |
-| the tab's name at the top of the sidebar | it moves to the tab's top level |
+| **Top level** at the top of the sidebar | it moves to the tab's top level |
 | a tab | it moves to that tab's top level |
 
 **Esc** cancels a drag. A directory moves with **everything inside it**, even to another tab.
