@@ -41,8 +41,11 @@ function Row({ d, depth, hasKids, open, selected, total, onToggle, onSelect, onM
         <button type="button" onClick={onSelect} className="flex min-w-0 flex-1 items-center gap-2 text-left" title={d.description || d.name}>
           <Folder size={16} className="shrink-0" /><span className="truncate">{d.name}</span>
         </button>
-        <span className="text-[12px] text-faint group-hover:hidden">{total || ""}</span>
-        <span className="hidden group-hover:flex">
+        {/* The ⋯ button must stay in place while its menu is open (the menu is positioned
+            relative to it), so it fades rather than disappearing; the count sits underneath. */}
+        <span className="relative h-7 w-7 shrink-0">
+          <span className="absolute inset-0 flex items-center justify-end pr-0.5 text-[12px] text-faint transition group-hover:opacity-0 group-has-[[data-state=open]]:opacity-0">{total || ""}</span>
+          <span className="absolute inset-0 flex opacity-0 transition group-hover:opacity-100 focus-within:opacity-100 has-[[data-state=open]]:opacity-100">
           <Menu trigger={<IconButton label={`${d.name} options`} size="sm"><MoreHorizontal size={15} /></IconButton>}
             items={[
               { label: "New directory inside", icon: <FolderPlus size={14} />, onSelect: () => onMenu({ kind: "new", parentId: d.id }) },
@@ -51,6 +54,7 @@ function Row({ d, depth, hasKids, open, selected, total, onToggle, onSelect, onM
               "sep",
               { label: "Delete directory…", icon: <Trash2 size={14} />, danger: true, onSelect: () => onMenu("delete") },
             ]} />
+          </span>
         </span>
       </div>
       {drop.isOver && !self && <div className="pointer-events-none mb-1 text-[11.5px] text-accent-text" style={{ paddingLeft: 36 + depth * 18 }}>Drop to move into {d.name}</div>}

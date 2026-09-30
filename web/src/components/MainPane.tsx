@@ -28,7 +28,7 @@ function PersonCard({ p, onOpen, onMove, onDelete }: { p: PersonSummary; onOpen:
           <span className="line-clamp-2 text-[13px] leading-snug text-mute">{p.description}</span>
         </span>
       </button>
-      <span className="absolute right-2 top-2 opacity-0 transition group-hover:opacity-100 focus-within:opacity-100">
+      <span className="absolute right-2 top-2 opacity-0 transition group-hover:opacity-100 focus-within:opacity-100 has-[[data-state=open]]:opacity-100">
         <Menu trigger={<IconButton label={`Options for ${p.firstName}`} size="sm" className="bg-surface"><MoreHorizontal size={15} /></IconButton>}
           items={[
             { label: "Open card", icon: <UserRound size={14} />, onSelect: onOpen },

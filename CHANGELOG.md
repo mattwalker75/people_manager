@@ -4,6 +4,11 @@ All notable changes to People Manager (Keep a Changelog style; dates are when th
 
 ## [Unreleased]
 
+### Fixed
+- 2026-09-29: A directory's ⋯ menu in the sidebar jumped to the top-left corner of the window as
+  soon as the mouse left the row — the button it is attached to was removed on mouse-out. The
+  button now stays (faded in) while its menu is open; a card's ⋯ likewise.
+
 ### Added
 - 2026-09-29: **People from and to spreadsheets (CSV)** — Settings → Import & export.
   *Download CSV template* (every field, LinkedIn/Facebook/Instagram/X/TikTok/YouTube/Website link
