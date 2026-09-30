@@ -14,10 +14,19 @@ describe("phone numbers shaped while typing", () => {
     expect(formatPhone("5125550148 x204")).toBe("(512) 555-0148 x204");
     expect(formatPhone("5125550148 ext. 7")).toBe("(512) 555-0148 x7");
   });
+  it("turns digits past the tenth into an extension instead of going sideways", () => {
+    expect(formatPhone("11122233334444")).toBe("(111) 222-3333 x4444");
+    expect(formatPhone("51255501489")).toBe("(512) 555-0148 x9");
+    expect(formatPhone("+1 512 555 0148 22")).toBe("+1 (512) 555-0148 x22");
+    expect(formatPhone("15125550148")).toBe("(151) 255-5014 x8"); // a plain run of digits: the first ten are the number
+    expect(formatPhone("(512) 555-0148 x2")).toBe("(512) 555-0148 x2");
+    expect(formatPhone("(512) 555-0148 x")).toBe("(512) 555-0148 x");
+    // typed in the middle of an existing number, the last digit rolls into the extension
+    expect(formatPhone("(512) 5955-0148")).toBe("(512) 595-5014 x8");
+  });
   it("leaves other countries and odd input alone", () => {
     expect(formatPhone("+44 20 7946 0958")).toBe("+44 20 7946 0958");
     expect(formatPhone("+52 55 1234 5678")).toBe("+52 55 1234 5678");
-    expect(formatPhone("020 7946 0958 44")).toBe("020 7946 0958 44"); // 12 digits: not North American
     expect(formatPhone("")).toBe("");
     expect(formatPhone("abc")).toBe("abc");
   });

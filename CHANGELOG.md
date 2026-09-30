@@ -6,8 +6,10 @@ All notable changes to People Manager (Keep a Changelog style; dates are when th
 
 ### Changed
 - 2026-09-29: **Phone numbers take shape as you type** on the person form: `5125550148` becomes
-  `(512) 555-0148` digit by digit, a leading 1 becomes `+1 (512) 555-0148`, and an extension
-  (`x204`) is kept. Numbers starting with another country's `+` code are left as typed.
+  `(512) 555-0148` digit by digit; anything past the tenth digit becomes the extension
+  (`11122233334444` → `(111) 222-3333 x4444`); `+1` or a `1` set apart by a space is the country
+  code (`+1 (512) 555-0148`); a typed extension (`x204`) is kept. Numbers starting with another
+  country's `+` code are left as typed.
 
 ### Fixed
 - 2026-09-29: A directory's ⋯ menu in the sidebar jumped to the top-left corner of the window as
