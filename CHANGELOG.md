@@ -5,6 +5,9 @@ All notable changes to People Manager (Keep a Changelog style; dates are when th
 ## [Unreleased]
 
 ### Changed
+- 2026-09-29: The header's green *Add person* button is gone — *Add person here* in the main area
+  does the same and says where the person goes. *New directory* and *Add person here* are now
+  the green buttons.
 - 2026-09-29: The tab's name is no longer repeated inside the tab: the sidebar's first row and
   the location line say **Top level** instead (the location line is hidden at the top level itself).
 

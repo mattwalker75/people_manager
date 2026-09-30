@@ -24,7 +24,7 @@ organise bookmarks. This guide walks through everything the app does.
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────┐
-│ People Manager      [ Search by name, nickname or tag ⌘K ]   [+ Add person] ⚙ │
+│ People Manager      [ Search by name, nickname or tag ⌘K ]                 ⚙ │
 │ [Clients ⋯] Networking  Personal  Vendors   + Tab                           │
 │ ┌─────────────┬───────────────────────────────────────────────────────────┐ │
 │ │ DIRECTORIES │ Top level › Active clients                                │ │
@@ -70,8 +70,8 @@ Directories can hold people and other directories, as deep as you like.
 Each person shows as a card: photo (or coloured initials), **First Last (Nickname)** — the
 brackets only appear when there is a nickname — and their one-line description.
 
-- **Add:** *Add person* (top right) adds to the place you are looking at; *Add person here*
-  does the same from the main area. Only the **first name** is required.
+- **Add:** the green **Add person here** button adds a person to the place you are looking at
+  (the directory, or the tab's top level). Only the **first name** is required.
 - **Open:** click the card.
 - **Same name, different people:** allowed. Two or three “Mark Jones” are fine — their
   description, photo and where they sit tell them apart (search shows each one's path).

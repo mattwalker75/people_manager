@@ -131,9 +131,6 @@ export function Shell({ state }: { state: AppState }) {
         </label>
       ) : <div className="flex-1" />}
       <div className="flex-1" />
-      {route.view === "people" && tabId && !dsProblem && (
-        <Button variant="primary" icon={<Plus size={16} />} onClick={() => setCreating({ tabId, directoryId: dirId })}>Add person</Button>
-      )}
       <IconButton label="Settings" className="border border-line-2 bg-surface" onClick={() => go(route.view === "settings" ? "/" : "/settings/general")}><Settings size={17} /></IconButton>
       {state.auth.status === "authenticated" && (
         <Menu trigger={<button type="button" className="h-9 rounded-full border border-line-2 bg-surface px-3 text-[13px] text-ink-2 hover:bg-surface-2">{state.auth.loginName}</button>}

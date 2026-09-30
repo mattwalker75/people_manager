@@ -71,8 +71,8 @@ export function MainPane({ tab, dirs, dirId, people, loading, onSelectDir, onOpe
           <h1 className="font-display text-[30px] font-semibold leading-tight tracking-tight">{dir ? dir.name : "Top level"}</h1>
           <p className="mt-1 text-mute">{dir ? dir.description || "\u00a0" : "People in this tab who are not in a directory"}</p>
         </div>
-        <Button size="sm" icon={<FolderPlus size={15} />} onClick={() => setDialog("newDir")}>New directory</Button>
-        <Button size="sm" icon={<Plus size={15} />} onClick={onAddPerson}>Add person here</Button>
+        <Button size="sm" variant="primary" icon={<FolderPlus size={15} />} onClick={() => setDialog("newDir")}>New directory</Button>
+        <Button size="sm" variant="primary" icon={<Plus size={15} />} onClick={onAddPerson}>Add person here</Button>
         <Menu trigger={<IconButton label="More options" className="border border-line-2"><MoreHorizontal size={16} /></IconButton>}
           items={dir ? [
             { label: "Rename / edit description", icon: <Pencil size={14} />, onSelect: () => setDialog("editDir") },
