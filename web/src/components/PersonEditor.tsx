@@ -3,12 +3,13 @@
  * here and only here — they help search find the person and are never shown
  * on the card. Photos and notes are managed on the card itself.
  */
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Plus, Tag, Trash2, X } from "lucide-react";
 import type { ContactKind, CustomField, PersonFields } from "../../../shared/types";
 import { AGE_RANGES, EMPTY_FIELDS, MARITAL_STATUSES, PERSON_FIELD_KEYS } from "../../../shared/types";
 import { api } from "../lib/api";
+import { caretAfterFormat, formatPhone } from "../lib/phone";
 import type { PersonFull } from "../lib/hooks";
 import { Button, cx, Field, IconButton, Select, TextArea, TextInput } from "./ui";
 
@@ -54,6 +55,20 @@ function BirthdayInput({ value, onChange }: { value: string; onChange: (v: strin
       </Select>
       <TextInput aria-label="Birthday year (optional)" placeholder="Year (optional)" inputMode="numeric" maxLength={4} value={year} onChange={(e) => setYear(e.target.value.replace(/\D/g, ""))} />
     </div>
+  );
+}
+
+/** A phone field that takes shape as you type: 5125550148 → (512) 555-0148. */
+function PhoneInput({ value, onChange, ...rest }: { value: string; onChange: (v: string) => void; placeholder?: string; "aria-label"?: string }) {
+  const ref = useRef<HTMLInputElement>(null);
+  const caret = useRef<number | null>(null);
+  useEffect(() => { if (caret.current !== null && ref.current) { ref.current.setSelectionRange(caret.current, caret.current); caret.current = null; } });
+  return (
+    <TextInput ref={ref} type="tel" inputMode="tel" value={value} {...rest} onChange={(e) => {
+      const typed = e.target.value; const formatted = formatPhone(typed);
+      caret.current = caretAfterFormat(typed, e.target.selectionStart ?? typed.length, formatted);
+      onChange(formatted);
+    }} />
   );
 }
 
@@ -133,7 +148,9 @@ export function PersonEditor({ draft, setDraft, fields, error }: { draft: Draft;
             <TextInput aria-label="Label" placeholder={CONTACT_HINT[c.kind].label} value={c.label} onChange={(e) => set("contacts", draft.contacts.map((x, j) => (j === i ? { ...x, label: e.target.value } : x)))} />
             {c.kind === "address"
               ? <TextArea aria-label="Address" className="min-h-[64px]" placeholder={CONTACT_HINT[c.kind].value} value={c.value} onChange={(e) => set("contacts", draft.contacts.map((x, j) => (j === i ? { ...x, value: e.target.value } : x)))} />
-              : <TextInput aria-label={c.kind === "phone" ? "Phone number" : "Email address"} placeholder={CONTACT_HINT[c.kind].value} value={c.value} onChange={(e) => set("contacts", draft.contacts.map((x, j) => (j === i ? { ...x, value: e.target.value } : x)))} />}
+              : c.kind === "phone"
+              ? <PhoneInput aria-label="Phone number" placeholder={CONTACT_HINT[c.kind].value} value={c.value} onChange={(v) => set("contacts", draft.contacts.map((x, j) => (j === i ? { ...x, value: v } : x)))} />
+              : <TextInput aria-label="Email address" type="email" placeholder={CONTACT_HINT[c.kind].value} value={c.value} onChange={(e) => set("contacts", draft.contacts.map((x, j) => (j === i ? { ...x, value: e.target.value } : x)))} />}
             <IconButton label="Remove" onClick={() => set("contacts", draft.contacts.filter((_, j) => j !== i))}><Trash2 size={15} /></IconButton>
           </div>
         ))}

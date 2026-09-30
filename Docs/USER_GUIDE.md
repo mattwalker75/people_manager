@@ -103,7 +103,9 @@ Click **Edit**. Everything on the card is in the form:
 - **Key facts** — as many as you like.
 - **Tags** — see [Tags](#tags).
 - **Contact** — `+ Phone`, `+ Email`, `+ Address`, each with a label you choose (“Mobile”,
-  “Office”…). Add as many of each as you need.
+  “Office”…). Add as many of each as you need. Phone numbers take shape as you type
+  (`(512) 555-0148`; a leading 1 becomes `+1`; an extension like `x204` is kept); a number for
+  another country, starting with its `+` code, is left as you typed it.
 - **Links** — a name you choose (“LinkedIn”, “Practice Instagram”…) and the address;
   plus the business website and a line about the business.
 - **Work** — title, profession, business category (suggestions from categories you have used).
