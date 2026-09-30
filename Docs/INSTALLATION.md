@@ -64,8 +64,8 @@ chmod +x ~/Desktop/Start_People_Manager.command
 ```
 
 A Terminal window stays open while the app window is open; closing either stops the app. The
-copy finds the app in `~/Desktop/REPOs/people_manager` (edit the `candidate` paths at the top of
-the script if you keep it elsewhere).
+script has the app's folder hard-coded as `REPO` at the top (`~/Desktop/REPOs/people_manager`)
+— edit it if you keep the app elsewhere.
 
 ## Using it from another device
 
