@@ -5,6 +5,9 @@ All notable changes to People Manager (Keep a Changelog style; dates are when th
 ## [Unreleased]
 
 ### Changed
+- 2026-09-29: `Start_People_Manager.sh` works as a copy kept elsewhere (e.g.
+  `~/Desktop/Start_People_Manager.command` for a double-click in Terminal) — it falls back to
+  `~/Desktop/REPOs/people_manager` when it isn't inside the app folder.
 - 2026-09-29: The header's green *Add person* button is gone — *Add person here* in the main area
   does the same and says where the person goes. *New directory* and *Add person here* are now
   the green buttons.

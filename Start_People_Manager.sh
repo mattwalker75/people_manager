@@ -17,11 +17,23 @@
 #     launcher just opens a window onto it and leaves it running afterwards.
 #   • The port comes from config.json (server.port), so changing it in Settings
 #     is enough — nothing to edit here.
+#   • Prefer a double-click without my_mac_app? Copy this file anywhere as
+#     Start_People_Manager.command (the .command ending makes macOS run it in
+#     Terminal) and mark it executable:  chmod +x Start_People_Manager.command
+#     The Terminal window stays open while the app window is open.
 #
 # ============================== CONFIG =======================================
 
 APP_NAME="People Manager"                           # used in messages/logs only
-REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)" # the app's folder: this script lives in it
+# The app's folder. Normally this script lives in it; a copy elsewhere (say
+# ~/Desktop/Start_People_Manager.command) falls back to the paths below — edit
+# the last one if you keep the app somewhere else.
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ ! -f "$REPO/PEOPLE.sh" ]; then
+  for candidate in "$HOME/Desktop/REPOs/people_manager" "$HOME/REPOs/people_manager" "$HOME/people_manager"; do
+    if [ -f "$candidate/PEOPLE.sh" ]; then REPO="$candidate"; break; fi
+  done
+fi
 START_CMD="PM_NO_OPEN=1 ./PEOPLE.sh --fg"           # foreground start; the launcher opens the window itself
 STARTUP_TIMEOUT=90                                  # seconds (the first start may build the app)
 LOG="/tmp/people_manager.log"                       # server output goes here

@@ -54,6 +54,19 @@ cd ~/Desktop/REPOs/my_mac_app
 If People Manager is already running (started with `./PEOPLE.sh`), the launcher just opens a
 window onto it and leaves it running when you close the window.
 
+**Without my_mac_app:** copy the launcher to your Desktop as
+`Start_People_Manager.command` (the `.command` ending makes macOS run it in Terminal on a
+double-click) and mark it executable:
+
+```bash
+cp ~/Desktop/REPOs/people_manager/Start_People_Manager.sh ~/Desktop/Start_People_Manager.command
+chmod +x ~/Desktop/Start_People_Manager.command
+```
+
+A Terminal window stays open while the app window is open; closing either stops the app. The
+copy finds the app in `~/Desktop/REPOs/people_manager` (edit the `candidate` paths at the top of
+the script if you keep it elsewhere).
+
 ## Using it from another device
 
 Settings → General → **Allow other devices on my network**, then `./PEOPLE.sh --restart`. The
